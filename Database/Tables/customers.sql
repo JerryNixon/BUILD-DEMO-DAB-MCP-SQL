@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[customers]
     [zip] NVARCHAR(100) NOT NULL,
     [country] NVARCHAR(100) NOT NULL,
     [email] NVARCHAR(100) NOT NULL,
-    [details] JSON NULL,
+    [details] VARCHAR(MAX) NULL,
 
     PRIMARY KEY NONCLUSTERED ([id] ASC),
     UNIQUE NONCLUSTERED ([email] ASC)

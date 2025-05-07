@@ -1,0 +1,191 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.5.29/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "Server=localhost;Database=jnixon-mcp-build-demo;User ID=sa;Password=P@ssw0rd!;TrustServerCertificate=True;",
+    "options": {
+      "set-session-context": false
+    }
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/api",
+      "request-body-strict": true
+    },
+    "graphql": {
+      "enabled": true,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
+    "host": {
+      "cors": {
+        "origins": [],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "StaticWebApps"
+      },
+      "mode": "development"
+    }
+  },
+  "entities": {
+    "claims": {
+      "source": {
+        "object": "dbo.claims",
+        "type": "table",
+        "key-fields": [
+          "id"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "claims",
+          "plural": "claims"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/claims"
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ],
+      "mappings": {
+        "claim_date": "claim_date",
+        "claim_type": "claim_type",
+        "customer_id": "customer_id",
+        "details": "details",
+        "id": "id"
+      }
+    },
+    "communication_history": {
+      "source": {
+        "object": "dbo.communication_history",
+        "type": "table",
+        "key-fields": [
+          "id"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "communication_history",
+          "plural": "communication_histories"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/communication_history"
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ],
+      "mappings": {
+        "communication_date": "communication_date",
+        "communication_type": "communication_type",
+        "customer_id": "customer_id",
+        "details": "details",
+        "id": "id"
+      }
+    },
+    "customers": {
+      "source": {
+        "object": "dbo.customers",
+        "type": "table",
+        "key-fields": [
+          "id"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "customers",
+          "plural": "customers"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/customers"
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ],
+      "mappings": {
+        "address": "address",
+        "city": "city",
+        "country": "country",
+        "details": "details",
+        "email": "email",
+        "first_name": "first_name",
+        "id": "id",
+        "last_name": "last_name",
+        "state": "state",
+        "zip": "zip"
+      }
+    },
+    "policies": {
+      "source": {
+        "object": "dbo.policies",
+        "type": "table",
+        "key-fields": [
+          "id"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "policies",
+          "plural": "policies"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/policies"
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ],
+      "mappings": {
+        "additional_notes": "additional_notes",
+        "customer_id": "customer_id",
+        "duration": "duration",
+        "id": "id",
+        "payment_amount": "payment_amount",
+        "payment_type": "payment_type",
+        "premium": "premium",
+        "start_date": "start_date",
+        "type": "type"
+      }
+    }
+  }
+}
