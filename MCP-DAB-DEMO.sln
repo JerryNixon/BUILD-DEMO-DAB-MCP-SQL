@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
 		swa-db-connections\staticwebapp.database.config.json = swa-db-connections\staticwebapp.database.config.json
@@ -24,16 +22,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}.Debug|x64.ActiveCfg = Debug|x64
-		{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}.Debug|x86.ActiveCfg = Debug|x86
-		{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}.Release|x64.ActiveCfg = Release|x64
-		{1BB45943-65D4-4A20-97A1-2BCEA8980BE2}.Release|x86.ActiveCfg = Release|x86
 		{8B3A187B-DF59-EFF4-34F3-CA37CC868C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B3A187B-DF59-EFF4-34F3-CA37CC868C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B3A187B-DF59-EFF4-34F3-CA37CC868C80}.Debug|x64.ActiveCfg = Debug|Any CPU
