@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace McpServer
 {
@@ -20,7 +21,7 @@ namespace McpServer
             var client = new HttpClient();
             var response = await client.GetAsync("https://<your-site>.azurestaticapps.net/data-api/claims");
             var content = await response.Content.ReadAsStringAsync();
-            return new JsonResult(new McpContent(content));
+            return default;
         }
     }
 }
