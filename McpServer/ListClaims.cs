@@ -1,27 +1,16 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System.Net.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace McpServer
 {
-    public static class ListClaims
+    public class ListClaims
     {
-        [FunctionName("ListClaims")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req,
-            ILogger log)
+        [Function("ListClaims")]
+        public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
         {
-            var client = new HttpClient();
-            var response = await client.GetAsync("https://<your-site>.azurestaticapps.net/data-api/claims");
-            var content = await response.Content.ReadAsStringAsync();
-            return default;
+            return new OkObjectResult("Welcome to Azure Functions!");
         }
     }
 }
