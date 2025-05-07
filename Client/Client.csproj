@@ -6,10 +6,6 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<OutputPath>bin\staticsites\$(MSBuildProjectName)\</OutputPath>
-	</PropertyGroup>
-
 	<ItemGroup>
 		<Content Update="wwwroot\**\*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
