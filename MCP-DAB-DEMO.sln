@@ -5,6 +5,7 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\azure-static-web-apps-salmon-meadow-0d9fbce0f.yml = .github\workflows\azure-static-web-apps-salmon-meadow-0d9fbce0f.yml
 		swa-db-connections\staticwebapp.database.config.json = swa-db-connections\staticwebapp.database.config.json
 	EndProjectSection
 EndProject
