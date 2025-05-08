@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /Client/appsettings.Development.json
 "Client/appsettings.Development.json" 
+/McpClient/appsettings.json
