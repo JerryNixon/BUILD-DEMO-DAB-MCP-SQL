@@ -28,6 +28,9 @@ jobs:
       - name: Publish MCP Server
         run: dotnet publish ./McpServer/McpServer.csproj -c Release -o McpServer/publish
 
+      - name: Add Azure Functions Language Marker
+        run: echo "dotnet-isolated" > McpServer/publish/azure-functions-language
+
       - name: Build And Deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
