@@ -13,9 +13,8 @@ public record Claim(
 public record CommunicationHistory(
     [property: Key]
     [property: JsonPropertyName("id")] int Id,
-    [property: JsonPropertyName("communication_date")] DateTime CommunicationDate,
+    [property: JsonPropertyName("data")] DateTime CommunicationDate,
     [property: JsonPropertyName("communication_type")] string CommunicationType,
-    [property: JsonPropertyName("customer_id")] int CustomerId,
     [property: JsonPropertyName("details")] string? Details
 );
 

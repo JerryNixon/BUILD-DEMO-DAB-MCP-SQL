@@ -4,6 +4,7 @@ using Microsoft.DataApiBuilder.Rest.Options;
 using ModelContextProtocol.Server;
 
 using System.ComponentModel;
+using System.IO;
 
 [McpServerToolType]
 public static class Tools
@@ -48,18 +49,32 @@ public static class Tools
         GetFiltered<Policy>("policies", filter, cancellationToken);
 
     [McpServerTool, Description("""
-    Return interactions history for a customer based on customer id and subject.
+    Search interactions history for a customer based on customer id and subject.
     Columns:
       [Key] id (int): internal communication id
-      [ForeignKey: to customers.id] customer_id (int): customer id
-      communication_date (DateTime): communication date
+      date (DateTime): communication date
       communication_type (string): type of communication (email, call, etc)
       details (string): notes or transcript
     """)]
     public static CommunicationHistory[] GetCommunicationHistory(
-        [Description("OData $filter string, e.g., communication_type eq 'email'")] string filter,
-        CancellationToken? cancellationToken = null) =>
-        GetFiltered<CommunicationHistory>("communication_history", filter, cancellationToken);
+        [Description("Customer Id to filter search")] int customerId,
+        [Description("A string to search for comm subjects, use 'all' to return entire table.")] string subject,
+        CancellationToken? cancellationToken = null)
+    {
+        var repo = new ProcedureRepository<CommunicationHistory>(new(string.Format(DAB_URL, "GetCommunicationHistory")));
+        var options = new ProcedureOptions
+        {
+            Parameters = new Dictionary<string, string>
+            {
+                { "customerId", customerId.ToString() },
+                { "subject", subject },
+            }
+        };
+
+        var result = repo.ExecuteAsync(options, cancellationToken ?? CancellationToken.None).GetAwaiter().GetResult();
+        return result.Result;
+    }
+
 
     [McpServerTool, Description("""
     Query the database to find customer data.

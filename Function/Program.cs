@@ -1,11 +1,9 @@
-using Microsoft.Azure.Functions.Worker.Builder;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
-var builder = FunctionsApplication
-    .CreateBuilder(args);
-
-builder
+var host = new HostBuilder()
     .ConfigureFunctionsWebApplication()
-    .EnableMcpToolMetadata();
+    .Build();
 
-builder.Build().Run();
+host.Run();

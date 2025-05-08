@@ -7,6 +7,9 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="ChatProxy.cs" />
+	</ItemGroup>
+	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 		<!-- Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4. -->
 		<!-- <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.22.0" /> -->
@@ -39,8 +42,7 @@
 	</ItemGroup>
 
 	<Target Name="CopyChannelsAssembly" AfterTargets="Build">
-		<Copy SourceFiles="$(UserProfile)\\.nuget\\packages\\system.threading.channels\\8.0.0\\lib\\net8.0\\System.Threading.Channels.dll"
-			  DestinationFolder="$(OutputPath)" />
+		<Copy SourceFiles="$(UserProfile)\\.nuget\\packages\\system.threading.channels\\8.0.0\\lib\\net8.0\\System.Threading.Channels.dll" DestinationFolder="$(OutputPath)" />
 	</Target>
 
 </Project>
