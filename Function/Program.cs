@@ -1,9 +1,30 @@
-using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 
-var host = new HostBuilder()
+var builder = FunctionsApplication
+    .CreateBuilder(args);
+
+builder
     .ConfigureFunctionsWebApplication()
-    .Build();
+    .EnableMcpToolMetadata();
 
-host.Run();
+/*
+
+builder.ConfigureMcpTool(GetStarDateTool.ToolName)
+    .WithProperty(GetStarDateTool.DateName, GetStarDateTool.DateType, GetStarDateTool.DateDescription);
+
+builder.ConfigureMcpTool(GetCustomersTool.ToolName)
+    .WithProperty(GetCustomersTool.FilterName, GetCustomersTool.FilterType, GetCustomersTool.FilterDescription);
+
+builder.ConfigureMcpTool(GetClaimsTool.ToolName)
+    .WithProperty(GetClaimsTool.FilterName, GetClaimsTool.FilterType, GetClaimsTool.FilterDescription);
+
+builder.ConfigureMcpTool(GetPoliciesTool.ToolName)
+    .WithProperty(GetPoliciesTool.FilterName, GetPoliciesTool.FilterType, GetPoliciesTool.FilterDescription);
+
+builder.ConfigureMcpTool(GetCommunicationHistoryTool.ToolName)
+    .WithProperty(GetCommunicationHistoryTool.FilterName, GetCommunicationHistoryTool.FilterType, GetCommunicationHistoryTool.FilterDescription);
+
+*/
+
+builder.Build().Run();

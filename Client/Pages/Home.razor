@@ -1,7 +1,72 @@
 ﻿@page "/"
+@using System.Text.Json
+@using System.Text
+@inject IHttpClientFactory HttpClientFactory
 
-<PageTitle>Home</PageTitle>
+<h3>AI Chat</h3>
 
-<h1>Hello, world!</h1>
+<div style="display: flex;">
+    <div style="flex: 2; padding: 1rem;">
+        <p>This is your normal app space.</p>
+    </div>
+    <div style="flex: 1; border-left: 1px solid #ccc; padding: 1rem;">
+        <h4>Chat Assistant</h4>
 
-Welcome to your new app.
+        <div>
+            <textarea @bind="userInput" rows="4" style="width: 100%;"></textarea>
+            <button @onclick="SendMessage" style="margin-top: 0.5rem;">Send</button>
+        </div>
+
+        <div style="margin-top: 1rem;">
+            <strong>Response:</strong>
+            <p>@responseText</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string userInput = string.Empty;
+    private string responseText = string.Empty;
+
+    private async Task SendMessage()
+    {
+        var client = HttpClientFactory.CreateClient("ChatProxy");
+
+        var payload = new
+        {
+            messages = new[]
+            {
+            new { role = "system", content = "You are a helpful assistant." },
+            new { role = "user", content = userInput }
+        },
+            temperature = 0.7,
+            max_tokens = 800
+        };
+
+        var requestJson = JsonSerializer.Serialize(payload);
+        var content = new StringContent(requestJson, Encoding.UTF8, "application/json");
+
+        try
+        {
+            var result = await client.PostAsync("api/chatproxy", content);
+            var resultJson = await result.Content.ReadAsStringAsync();
+
+            var completion = JsonSerializer.Deserialize<ChatCompletionResponse>(resultJson);
+            responseText = completion?.Content?.FirstOrDefault()?.Text ?? "[No content]";
+        }
+        catch (Exception ex)
+        {
+            responseText = $"Client error: {ex.Message}";
+        }
+    }
+
+    public class ChatCompletionResponse
+    {
+        public List<ChatContent> Content { get; set; } = new();
+    }
+
+    public class ChatContent
+    {
+        public string? Text { get; set; }
+    }
+}
