@@ -82,6 +82,33 @@
         }
       ]
     },
+    "CommunicationHistory": {
+      "source": {
+        "object": "dbo.communication_history",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "History",
+          "plural": "Histories"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "CommunicationHistory"
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
     "Customer": {
       "source": {
         "object": "dbo.customers",
@@ -128,7 +155,8 @@
       "rest": {
         "enabled": true,
         "methods": [
-          "post", "get"
+          "post",
+          "get"
         ]
       },
       "permissions": [

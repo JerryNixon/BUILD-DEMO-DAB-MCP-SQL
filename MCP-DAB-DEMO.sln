@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McpClient.Web", "McpClient.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.DataApiBuilder.Rest", "..\data-api-builder-vscode-ext\classlib-dab-rest\Microsoft.DataApiBuilder.Rest\Microsoft.DataApiBuilder.Rest.csproj", "{05B9EAB9-0754-13E7-32C4-F8B326C67DA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McpShared", "McpShared\McpShared.csproj", "{160EAE73-661B-49A4-973D-6F6FDEDB145D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,18 @@ Global
 		{05B9EAB9-0754-13E7-32C4-F8B326C67DA0}.Release|x64.Build.0 = Release|Any CPU
 		{05B9EAB9-0754-13E7-32C4-F8B326C67DA0}.Release|x86.ActiveCfg = Release|Any CPU
 		{05B9EAB9-0754-13E7-32C4-F8B326C67DA0}.Release|x86.Build.0 = Release|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Debug|x64.Build.0 = Debug|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Debug|x86.Build.0 = Debug|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Release|x64.ActiveCfg = Release|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Release|x64.Build.0 = Release|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Release|x86.ActiveCfg = Release|Any CPU
+		{160EAE73-661B-49A4-973D-6F6FDEDB145D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

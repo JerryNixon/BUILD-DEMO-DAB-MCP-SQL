@@ -34,4 +34,43 @@ declare @re nvarchar(max) = json_query(@response, '$.result.data[0].embedding')
 set @embedding = cast(@re as vector(1536));
 
 return @retval
-go
+go;
+
+CREATE OR ALTER PROCEDURE [dbo].[process_missing_embeddings]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @id INT;
+    DECLARE @text NVARCHAR(MAX);
+    DECLARE @embedding VECTOR(1536);
+
+    DECLARE cur CURSOR LOCAL FAST_FORWARD FOR
+        SELECT id, details
+        FROM communication_history
+        WHERE embedding IS NULL;
+
+    OPEN cur;
+    FETCH NEXT FROM cur INTO @id, @text;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        BEGIN TRY
+            EXEC dbo.get_embedding @text, @embedding OUTPUT;
+
+            UPDATE communication_history
+            SET embedding = @embedding
+            WHERE id = @id;
+        END TRY
+        BEGIN CATCH
+            -- optional: log error or skip
+            PRINT CONCAT('Failed to process id ', @id, ': ', ERROR_MESSAGE());
+        END CATCH
+
+        FETCH NEXT FROM cur INTO @id, @text;
+    END
+
+    CLOSE cur;
+    DEALLOCATE cur;
+END
+GO
