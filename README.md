@@ -14,7 +14,6 @@ sequenceDiagram
 
     box "Custom.Shared"
         participant AI as AiService
-        participant Logger as ILogger (Microsoft.Extensions.Logging)
     end
 
     box "Azure.AI.OpenAI"
@@ -32,30 +31,26 @@ sequenceDiagram
     U-->>Main: "Jerry"
 
     Main->>AI: new AiService(config)
-    AI->>Logger: Log "AI service constructed"
 
     Main->>AI: InitAsync(systemPrompt)
-    AI->>Logger: Log "Initializing..."
+    activate AI
     AI->>O: new AzureOpenAIClient(endpoint, key)
     AI->>O: GetChatClient(deployment)
     AI->>AI: GetChatClient(systemPrompt)
-    AI->>Logger: Log "Creating chat client"
     AI->>Tools: McpClientFactory.CreateAsync
     Tools-->>AI: McpClient
     AI->>Tools: ListToolsAsync
     Tools-->>AI: List<McpClientTool>
     AI-->>Main: AiService instance
+    deactivate AI
 
     loop Chat Loop
         Main->>U: Prompt input
         U-->>Main: "User input"
         Main->>AI: ChatAsync(input)
-        AI->>Logger: Log "Chatting with AI"
         AI->>Chat: GetStreamingResponseAsync(Messages, ChatOptions)
         Chat-->>AI: Streaming updates
-        AI->>Logger: Log update
         AI-->>Main: Response string
         Main->>U: Show response
     end
-
 ```
