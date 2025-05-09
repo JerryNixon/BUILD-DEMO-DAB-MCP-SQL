@@ -2,7 +2,7 @@
   "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.4.26/dab.draft.schema.json",
   "data-source": {
     "database-type": "mssql",
-    "connection-string": "@env('MSSQL')",   
+    "connection-string": "@env('MSSQL')",
     "options": {
       "set-session-context": false
     }
@@ -110,11 +110,11 @@
     },
     "GetCommunicationHistory": {
       "source": {
-        "object": "find_communication_history_by_subject",
+        "object": "[dbo].[find_communication_history_by_subject]",
         "type": "stored-procedure",
         "parameters": {
-          "customerId": 0,
-          "subject": "*"
+          "customerId": "number",
+          "subject": "string"
         }
       },
       "graphql": {
@@ -122,13 +122,13 @@
         "operation": "query",
         "type": {
           "singular": "GetCommunicationHistory",
-          "plural": "GetCommunicationHistory"
+          "plural": "GetCommunicationHistories"
         }
       },
       "rest": {
         "enabled": true,
         "methods": [
-          "post"
+          "post", "get"
         ]
       },
       "permissions": [

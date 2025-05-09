@@ -9,7 +9,8 @@ using System.IO;
 [McpServerToolType]
 public static class Tools
 {
-    private const string DAB_URL = "https://salmon-meadow-0d9fbce0f.6.azurestaticapps.net/data-api/api/{0}";
+    // private const string DAB_URL = "https://salmon-meadow-0d9fbce0f.6.azurestaticapps.net/data-api/api/{0}";
+    private const string DAB_URL = "http://localhost:5000/api/{0}";
 
     [McpServerTool, Description("""
     Says Hello to a user to show the code is working.
@@ -26,9 +27,9 @@ public static class Tools
       details (string): details and notes about the claim added by the agent
     """)]
     public static Claim[] GetClaims(
-        [Description("OData $filter string, e.g., claim_type eq 'auto'")] string filter,
+        [Description("OData $filter string, e.g., claim_type eq 'auto' or empty string to get all records")] string filter,
         CancellationToken? cancellationToken = null) =>
-        GetFiltered<Claim>("claims", filter, cancellationToken);
+        GetFiltered<Claim>("Claim", filter, cancellationToken);
 
     [McpServerTool, Description("""
     Query the database to find policies data for customers.
@@ -44,9 +45,9 @@ public static class Tools
         additional_notes (string): details and notes about the policy and payment status
     """)]
     public static Policy[] GetPolicies(
-        [Description("OData $filter string, e.g., type eq 'home'")] string filter,
+        [Description("OData $filter string, e.g., type eq 'home' or empty string to get all records")] string filter,
         CancellationToken? cancellationToken = null) =>
-        GetFiltered<Policy>("policies", filter, cancellationToken);
+        GetFiltered<Policy>("Policy", filter, cancellationToken);
 
     [McpServerTool, Description("""
     Search interactions history for a customer based on customer id and subject.
@@ -92,15 +93,42 @@ public static class Tools
       active_policies (string): other types of policies (life, car, etc)
     """)]
     public static Customer[] GetCustomers(
-        [Description("OData $filter string, e.g., last_name eq 'Smith'")] string filter,
+        [Description("OData $filter string, e.g., last_name eq 'Smith' or empty string to get all records.")] string filter,
         CancellationToken? cancellationToken = null) =>
-        GetFiltered<Customer>("customers", filter, cancellationToken);
+        GetFiltered<Customer>("Customer", filter, cancellationToken);
 
+    [McpServerTool, Description("Update a Customer record; resturns updated Customer.")]
+    public static Customer UpdateCustomer(
+       [Description("Customer ID (int)")] int id,
+       [Description("First name (nvarchar(100))")] string first_name,
+       [Description("Last name (nvarchar(100))")] string last_name,
+       [Description("Email address (nvarchar(100))")] string email,
+       [Description("Street address (nvarchar(100))")] string address,
+       [Description("City (nvarchar(100))")] string city,
+       [Description("State or province (nvarchar(100))")] string state,
+       [Description("Postal code (nvarchar(100))")] string zip,
+       [Description("Country (nvarchar(100))")] string country)
+    {
+        var customer = new Customer(
+            Id: id,
+            FirstName: first_name,
+            LastName: last_name,
+            Email: email,
+            Address: address,
+            City: city,
+            State: state,
+            Zip: zip,
+            Country: country
+            );
+        var repo = new TableRepository<Customer>(new(string.Format(DAB_URL, "Customer")));
+        var result = repo.PatchAsync(customer, default, CancellationToken.None).GetAwaiter().GetResult();
+        return result.Result;
+    }
 
     private static T[] GetFiltered<T>(string path, string filter, CancellationToken? cancellationToken = null) where T : class
     {
         var repo = new TableRepository<T>(new(string.Format(DAB_URL, path)));
-        var options = new TableOptions { Filter = filter };
+        var options = string.IsNullOrWhiteSpace(filter) ? default : new TableOptions { Filter = filter };
         var result = repo.GetAsync(options, cancellationToken ?? CancellationToken.None).GetAwaiter().GetResult();
         return result.Result;
     }
