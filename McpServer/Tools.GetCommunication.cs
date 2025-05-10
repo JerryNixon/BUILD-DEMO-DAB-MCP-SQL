@@ -1,4 +1,3 @@
-/*
 using Microsoft.DataApiBuilder.Rest;
 using Microsoft.DataApiBuilder.Rest.Options;
 
@@ -11,8 +10,8 @@ using System.Text.Json.Serialization;
 public static partial class Tools
 {
     [McpServerTool, Description("""
-    Search interactions history for a customer based on customer id and subject.
-    This is different than CommunicationHistoryTable because this provides semantic search.
+    Search through Customer Communication History by Topic/Subject.
+    This stored procedure uses vector search for natural language searches. 
     Columns:
       [Key] id (int): internal communication id
       date (DateTime): communication date
@@ -46,5 +45,3 @@ public record CommunicationHistory(
     [property: JsonPropertyName("communication_type")] string CommunicationType,
     [property: JsonPropertyName("details")] string? Details
 );
-
-*/

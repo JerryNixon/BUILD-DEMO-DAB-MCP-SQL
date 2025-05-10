@@ -39,6 +39,9 @@ while (true)
         continue;
     }
 
+    // replace [ and ] chars
+    input = input.Replace("[", "{").Replace("]", "}");
+
     chatHistory.Add($"[green]{input}[/]");
 
     AnsiConsole.Status()

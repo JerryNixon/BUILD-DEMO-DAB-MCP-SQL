@@ -8,7 +8,6 @@ using System.ComponentModel;
 [McpServerToolType]
 public static partial class Tools
 {
-    // private const string DAB_URL = "https://salmon-meadow-0d9fbce0f.6.azurestaticapps.net/data-api/api/{0}";
     private const string DAB_URL = "http://localhost:5000/api/{0}";
 
     [McpServerTool, Description("Says Hello to a user to show the code is working. Answers 'is this working?' amung others.")]

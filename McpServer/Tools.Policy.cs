@@ -3,8 +3,6 @@ using Microsoft.DataApiBuilder.Rest;
 using ModelContextProtocol.Server;
 
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 public static partial class Tools
 {
@@ -33,7 +31,7 @@ public static partial class Tools
     [Description("Policy type (nvarchar(100))")] string type,
     [Description("Premium amount (decimal)")] decimal premium,
     [Description("Payment type (nvarchar(100))")] string payment_type,
-    [Description("Policy start date (datetime)")] DateTime start_date,
+    [Description("Policy start date (datetime) The text should be in format 'yyyy-MM-ddTHH:mm:sszzz' and each field value is within valid range.")] DateTime start_date,
     [Description("Policy duration (nvarchar(100))")] string duration,
     [Description("Payment amount (decimal)")] decimal payment_amount,
     [Description("Notes about the policy (nvarchar(1000))")] string? additional_notes)
@@ -55,16 +53,3 @@ public static partial class Tools
         return result.Result;
     }
 }
-
-public record Policy(
-    [property: Key]
-    [property: JsonPropertyName("id")] int Id,
-    [property: JsonPropertyName("type")] string Type,
-    [property: JsonPropertyName("start_date")] DateTime StartDate,
-    [property: JsonPropertyName("duration")] string Duration,
-    [property: JsonPropertyName("premium")] decimal Premium,
-    [property: JsonPropertyName("payment_type")] string PaymentType,
-    [property: JsonPropertyName("payment_amount")] decimal PaymentAmount,
-    [property: JsonPropertyName("customer_id")] int CustomerId,
-    [property: JsonPropertyName("additional_notes")] string? AdditionalNotes
-);

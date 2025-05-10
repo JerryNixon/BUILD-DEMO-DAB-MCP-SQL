@@ -1,0 +1,124 @@
+﻿@inject IJSRuntime JS
+@inject AiService Ai
+
+<div class="chat-launcher">
+    @if (!open)
+    {
+        <button class="btn btn-primary rounded-circle p-3 shadow" @onclick="() => open = true">💬</button>
+    }
+    else
+    {
+        <div class="card shadow" style="width: 320px; height: 480px;">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <strong>Contoso Chat</strong>
+                <button class="btn btn-sm btn-outline-secondary" @onclick="() => open = false">×</button>
+            </div>
+            <div class="card-body d-flex flex-column" style="overflow-y: auto;">
+                <div class="flex-grow-1 overflow-auto mb-2" style="white-space: pre-wrap;" @ref="scrollRef">
+                    @foreach (var message in messages)
+                    {
+                        <div>@message</div>
+                    }
+                </div>
+                <div class="input-group mt-auto">
+                    <input class="form-control" @bind="input" @bind:event="oninput"
+                           placeholder="Ask something..." @onkeydown="HandleEnter" />
+                    <button class="btn btn-success" @onclick="SendAsync" disabled="@isLoading">Send</button>
+                    <button class="btn btn-outline-primary" @onclick="ReloadAsync" disabled="@isLoading">!</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!_scriptInjected)
+{
+    <script>
+        window.scrollToBottom = (element) => {
+            if (element) element.scrollTop = element.scrollHeight;
+        };
+    </script>
+}
+
+@code {
+    [Parameter]
+    public EventCallback OnRefreshRequested { get; set; }
+    private ElementReference scrollRef;
+    bool _scriptInjected = false;
+
+    private bool open = false;
+    private string input = "";
+    private bool isLoading = false;
+    private List<MarkupString> messages = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        var aiseed =
+           "You're an AI who helps insurance reps interact with their data to help customers and find savings. " +
+           "Limit your responses to the answer and only show data when requested. " +
+           "For new records, increment the largest existing Id. Ask for missing fields before inserting. " +
+           "When asked to list things, list only the name or title to limit each to one line unless asked otherwise. " +
+           "If I tell you I just communicated with a customer, add a communication record. " +
+           "Your output is plain text so do not _underline_ or *bold* or respond in tables or emojis. " +
+           "Number format: 1,234 or $1,234. Date format: DDD, MMM dd, YYYY. Today's date is " + DateTime.Now.ToString();
+
+        try
+        {
+            await Ai.InitAsync(aiseed);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debugger.Break();
+        }
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _scriptInjected = true;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private async Task SendAsync()
+    {
+        if (string.IsNullOrWhiteSpace(input)) return;
+
+        messages.Add((MarkupString)$"Q: {input}");
+        isLoading = true;
+
+        var reply = await Ai.ChatAsync(input);
+        messages.Add((MarkupString)$"<b>{reply}</b>");
+
+        input = "";
+        isLoading = false;
+
+        if (input.Contains("reload", StringComparison.OrdinalIgnoreCase) && OnRefreshRequested.HasDelegate)
+        {
+            await OnRefreshRequested.InvokeAsync();
+        }
+        if (reply.Contains("reload", StringComparison.OrdinalIgnoreCase) && OnRefreshRequested.HasDelegate)
+        {
+            await OnRefreshRequested.InvokeAsync();
+        }
+
+        await InvokeAsync(StateHasChanged);
+
+        await JS.InvokeVoidAsync("scrollToBottom", scrollRef);
+    }
+
+    private async Task ReloadAsync()
+    {
+        if (OnRefreshRequested.HasDelegate)
+        {
+            await OnRefreshRequested.InvokeAsync();
+        }
+    }
+
+    private async Task HandleEnter(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") await SendAsync();
+    }
+}

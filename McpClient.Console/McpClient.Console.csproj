@@ -14,7 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\McpShared\McpShared.csproj" />
+		<ProjectReference Include="..\McpClient.Shared\McpClient.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

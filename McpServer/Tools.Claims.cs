@@ -3,8 +3,6 @@ using Microsoft.DataApiBuilder.Rest;
 using ModelContextProtocol.Server;
 
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 public static partial class Tools
 {
@@ -44,11 +42,3 @@ public static partial class Tools
     }
 }
 
-public record Claim(
-    [property: Key]
-    [property: JsonPropertyName("id")] int Id,
-    [property: JsonPropertyName("claim_date")] DateTime ClaimDate,
-    [property: JsonPropertyName("claim_type")] string ClaimType,
-    [property: JsonPropertyName("customer_id")] int CustomerId,
-    [property: JsonPropertyName("details")] string? Details
-);
