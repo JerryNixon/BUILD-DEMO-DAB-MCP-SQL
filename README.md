@@ -1,51 +1,56 @@
 # MCP-DAB-DEMO
 
-## ChatProxy Function
+## Chat Function
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor C as Client
-    participant F as ChatProxy
-    participant E as Environment
-    participant L as Logger
-    participant O as AzureOpenAIClient
-    participant Chat as ChatClient
+    actor U as User (Console)
+    
+    box "Custom.Client"
+        participant Main as Program.cs
+        participant Cfg as IConfiguration (Microsoft.Extensions.Configuration)
+    end
 
-    C->>F: POST /api/chatproxy
-    F-->>L: Log "Entered ChatProxy function"
+    box "Custom.Shared"
+        participant AI as AiService
+    end
 
-    F->>E: Get Variables
-    E-->>F: Get Variables
+    box "Azure.AI.OpenAI"
+        participant O as AzureOpenAIClient
+        participant Chat as ChatClient
+    end
 
-    alt Missing Environment Variables
-        F-->>C: HTTP 500 - Missing VARIABLE_NAME
-    else
-        F-->>L: Log "Deserializing ChatRequest"
-        F->>F: Read and parse request body
+    box "ModelContextProtocol"
+        participant Tools as MCP Tool Server (McpClient)
+    end
 
-        F-->>L: Log "Converting messages"
-        F->>F: Map SerializableChatMessage[] to ChatMessage[]
+    U->>Main: Start console app
+    Main->>Cfg: Load appsettings + env
+    Main->>U: Ask name
+    U-->>Main: "Jerry"
 
-        F-->>L: Log "Creating ChatCompletionOptions"
-        F->>F: Construct options object
+    Main->>AI: new AiService(config)
 
-        F->>O: new AzureOpenAIClient(endpoint, key)
-        O-->>F: AzureOpenAIClient instance
-        F->>O: GetChatClient(deployment)
-        O-->>F: ChatClient instance
+    Main->>AI: InitAsync(systemPrompt)
+    activate AI
+    AI->>O: new AzureOpenAIClient(endpoint, key)
+    AI->>O: GetChatClient(deployment)
+    AI->>AI: GetChatClient(systemPrompt)
+    AI->>Tools: McpClientFactory.CreateAsync
+    Tools-->>AI: McpClient
+    AI->>Tools: ListToolsAsync
+    Tools-->>AI: List<McpClientTool>
+    AI-->>Main: AiService instance
+    deactivate AI
 
-        F-->>L: Log "Calling OpenAI chat completion"
-        F->>Chat: CompleteChatAsync(messages, options)
-
-        alt OpenAI responds with error
-            Chat-->>F: Error (e.g., 429, 401)
-            F-->>L: Log "OpenAI error response"
-            F-->>C: HTTP 500 - OpenAI proxy error
-        else
-            Chat-->>F: ChatCompletion
-            F-->>L: Log "Received OpenAI response"
-            F-->>C: HTTP 200 OK with completion JSON
-        end
+    loop Chat Loop
+        Main->>U: Prompt input
+        U-->>Main: "User input"
+        Main->>AI: ChatAsync(input)
+        AI->>Chat: GetStreamingResponseAsync(Messages, ChatOptions)
+        Chat-->>AI: Streaming updates
+        AI-->>Main: Response string
+        Main->>U: Show response
     end
 ```
