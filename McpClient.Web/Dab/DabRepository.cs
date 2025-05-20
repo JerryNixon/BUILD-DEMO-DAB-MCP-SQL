@@ -1,7 +1,7 @@
 ﻿using Microsoft.DataApiBuilder.Rest;
 using Microsoft.DataApiBuilder.Rest.Options;
 
-namespace McpClient.Web.Dab;
+namespace Client.Web.Dab;
 
 public class DabRepository
 {

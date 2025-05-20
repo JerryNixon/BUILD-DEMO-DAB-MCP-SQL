@@ -8,7 +8,7 @@
 
   <ItemGroup>
       <PackageReference Include="DataApiBuilder.Rest" Version="0.0.6" />
-      <ProjectReference Include="..\McpClient.Shared\McpClient.Shared.csproj" />
+      <ProjectReference Include="..\McpClient.Shared\Client.Shared.csproj" />
   </ItemGroup>
 
 </Project>

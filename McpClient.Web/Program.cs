@@ -1,5 +1,5 @@
-using McpClient.Web.Components;
-using McpClient.Web.Dab;
+using Client.Web.Components;
+using Client.Web.Dab;
 
 var builder = WebApplication.CreateBuilder(args);
 

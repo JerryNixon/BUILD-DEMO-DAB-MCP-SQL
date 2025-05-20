@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace McpClient.Web.Dab;
+namespace Client.Web.Dab;
 
 public record Claim(
     [property: Key]

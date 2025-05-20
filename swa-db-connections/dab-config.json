@@ -47,10 +47,13 @@
       },
       "permissions": [
         {
-          "role": "anonymous",
+          "role": "representative",
           "actions": [
             {
-              "action": "*"
+              "action": "*",
+              "policy": {
+                "database": "@item.RepId eq @claims.RepId"
+              }
             }
           ]
         }

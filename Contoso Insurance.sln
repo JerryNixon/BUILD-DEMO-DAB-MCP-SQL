@@ -3,14 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data API builder", "Data API builder", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
-		swa-db-connections\staticwebapp.database.config.json = swa-db-connections\staticwebapp.database.config.json
+		swa-db-connections\dab-config.json = swa-db-connections\dab-config.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McpServer", "McpServer\McpServer.csproj", "{E18D5573-17A3-49AE-8288-388D7FBCA432}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McpClient.Console", "McpClient.Console\McpClient.Console.csproj", "{B7604BFD-795C-677D-7DA1-96F0124BA2C2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{73D5999D-3E04-473C-8781-F3755683F40C}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,9 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{73
 		Database\100-sample-data.sql = Database\100-sample-data.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McpClient.Web", "McpClient.Web\McpClient.Web.csproj", "{39698E65-75F1-4158-9245-1BB0C46DA528}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Web", "McpClient.Web\Client.Web.csproj", "{39698E65-75F1-4158-9245-1BB0C46DA528}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McpClient.Shared", "McpClient.Shared\McpClient.Shared.csproj", "{C5A4A9A5-B930-D1F9-4E03-710DEA04B2A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Shared", "McpClient.Shared\Client.Shared.csproj", "{C5A4A9A5-B930-D1F9-4E03-710DEA04B2A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,18 +46,6 @@ Global
 		{E18D5573-17A3-49AE-8288-388D7FBCA432}.Release|x64.Build.0 = Release|Any CPU
 		{E18D5573-17A3-49AE-8288-388D7FBCA432}.Release|x86.ActiveCfg = Release|Any CPU
 		{E18D5573-17A3-49AE-8288-388D7FBCA432}.Release|x86.Build.0 = Release|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Debug|x64.Build.0 = Debug|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Debug|x86.Build.0 = Debug|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Release|x64.ActiveCfg = Release|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Release|x64.Build.0 = Release|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Release|x86.ActiveCfg = Release|Any CPU
-		{B7604BFD-795C-677D-7DA1-96F0124BA2C2}.Release|x86.Build.0 = Release|Any CPU
 		{39698E65-75F1-4158-9245-1BB0C46DA528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39698E65-75F1-4158-9245-1BB0C46DA528}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39698E65-75F1-4158-9245-1BB0C46DA528}.Debug|x64.ActiveCfg = Debug|Any CPU
