@@ -1,56 +1,37 @@
 # MCP-DAB-DEMO
 
-## Chat Function
+## Overview
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor U as User (Console)
-    
-    box "Custom.Client"
-        participant Main as Program.cs
-        participant Cfg as IConfiguration (Microsoft.Extensions.Configuration)
-    end
+MCP-DAB-DEMO is a demo solution built with **Blazor** (.NET 9) that showcases an AI-powered chat assistant for insurance representatives. The solution demonstrates integration with modern APIs and AI services to help users interact with customer data, find savings, and streamline communication.
 
-    box "Custom.Shared"
-        participant AI as AiService
-    end
+![](arch.png)
 
-    box "Azure.AI.OpenAI"
-        participant O as AzureOpenAIClient
-        participant Chat as ChatClient
-    end
+## Solution Structure
 
-    box "ModelContextProtocol"
-        participant Tools as MCP Tool Server (McpClient)
-    end
+- `McpClient.Web`: Blazor WebAssembly client.
+- `McpClient.Shared`: Shared models and services (AI, data contracts).
+- `McpServer`: ASP.NET Core backend API.
 
-    U->>Main: Start console app
-    Main->>Cfg: Load appsettings + env
-    Main->>U: Ask name
-    U-->>Main: "Jerry"
+## Prerequisites
 
-    Main->>AI: new AiService(config)
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- Azure OpenAI resource (for AI chat functionality)
+- Azure SQL database (for data storage)
+- Data APi builder (for REST access)
+- Model Context Protocol (for MOdel interop)
+- Model Context Protocol (for MOdel interop)
 
-    Main->>AI: InitAsync(systemPrompt)
-    activate AI
-    AI->>O: new AzureOpenAIClient(endpoint, key)
-    AI->>O: GetChatClient(deployment)
-    AI->>AI: GetChatClient(systemPrompt)
-    AI->>Tools: McpClientFactory.CreateAsync
-    Tools-->>AI: McpClient
-    AI->>Tools: ListToolsAsync
-    Tools-->>AI: List<McpClientTool>
-    AI-->>Main: AiService instance
-    deactivate AI
+## Main Components
 
-    loop Chat Loop
-        Main->>U: Prompt input
-        U-->>Main: "User input"
-        Main->>AI: ChatAsync(input)
-        AI->>Chat: GetStreamingResponseAsync(Messages, ChatOptions)
-        Chat-->>AI: Streaming updates
-        AI-->>Main: Response string
-        Main->>U: Show response
-    end
-```
+- **ChatLauncher.razor**: The main chat UI component. It injects an `AiService` and provides a chat interface for insurance reps, with context-aware AI responses.
+- **AiService**: Handles communication with Azure OpenAI.
+- **DataApiBuilder.Rest**: Used for RESTful data access.
+- **ModelContextProtocol**: For model-driven API contracts.
+
+## Dependencies
+
+- `DataApiBuilder.Rest`
+- `ModelContextProtocol`
+- `Azure.AI.OpenAI`
+- `Microsoft.Extensions.AI`
+- `OpenTelemetry.Exporter.OpenTelemetryProtocol`
